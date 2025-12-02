@@ -1,0 +1,38 @@
+### SIGN UP invalid por falta de datos
+
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "mail": "mailgenerico1@hotmail.com",
+  "pass": "Inicio1."
+}
+
+### SIGN UP mail ya existe
+
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  "lastName": "nombreGenerico",
+  "firstName": "apellidoGenerico",
+  "mail": "mailgenerico2@hotmail.com",
+  "pass": "Inicio1."
+}
+
+### SIGN IN valid
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "mail": "gonz.r@hotmail.com",
+  "pass": "Inicio1."
+}
+
+### PROFILE me
+
+GET http://localhost:3000/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibWFpbCI6ImdvbnouckBob3RtYWlsLmNvbSIsImlhdCI6MTc2NDU5MzM4NCwiZXhwIjoxNzY0NTkzOTg0fQ.Y8aTh5i1_m_mCW-8U-O29YJr6NVARkXc26jEV-LOtSE
+
