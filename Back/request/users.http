@@ -4,7 +4,9 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-  "mail": "mailgenerico1@hotmail.com",
+  "firstName": "G",
+  "lastName": "Rod",
+  "mail": "massilgenerico1@hotmail.com",
   "pass": "Inicio1."
 }
 

@@ -1,0 +1,11 @@
+### CREATE a product
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+    "brand": "Papel Higienico",
+    "lineUp": "Papel Higienico",
+    "description": "Papel Higienico",
+    "stock": "10",
+    "price": "11"
+} 

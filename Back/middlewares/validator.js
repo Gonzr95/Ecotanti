@@ -1,6 +1,6 @@
 export const validateSchema = (schema) => (req, res, next) => {
     // 1. Usamos safeParse en lugar de parse
-    const result = schema.safeParse(req.body);
+    const result = schema.safeParse(req. body);
 
     // 2. Si la validación falla (success es false)
     if (!result.success) {
