@@ -1,3 +1,5 @@
+import { UniqueConstraintError } from "sequelize";
+import { Product } from "../models/product.js"
 
 
 
@@ -14,4 +16,17 @@ export async function register(req, res) {
             price,
             isActive
         });
+        
+        return res.status(201).newProduct.toJSON();
+
+
     }
+    catch (error)
+    {
+        if( error instanceof UniqueConstraintError )
+        {
+            return res.status(409).json( { message: "Este producto ya existe" });
+        }
+        return res.status(500).json({ message: "Internal error" });
+    }
+};

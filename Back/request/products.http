@@ -3,11 +3,11 @@ POST http://localhost:3000/products
 Content-Type: application/json
 
 {
-    "productType": "df higienico",
-    "brand": "",
-    "lineUp": "sdfsfs",
-    "description": "Papel Higienico",
+    "productType": "Papel Higienico",
+    "brand": "Higienol",
+    "lineUp": "Pro Max",
+    "description": "4x80 mts / 10 ppaquetes por bolson.",
     "stock": "10",
-    "price": "2342",
-    "isActive": "sdss"
+    "price": "2300",
+    "isActive": "true"
 } 
