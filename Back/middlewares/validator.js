@@ -22,10 +22,6 @@ export const validateSchema = (schema) => (req, res, next) => {
             errors: formattedErrors
         });
 
-
-
-
-
         /* funciona pero no formato lindo
         return res.status(400).json({
             message: "Error de validación",
@@ -35,9 +31,7 @@ export const validateSchema = (schema) => (req, res, next) => {
 */
     }
 
-    // 3. Opcional pero recomendado:
-    // Reemplazamos req.body con los datos ya "limpios" y tipeados que devuelve Zod.
-    // Esto elimina cualquier campo extra que el usuario haya enviado y no esté en el esquema.
+    // 3. reemplazo datos validados por si vienen campos extra que no son deseados
     req.body = result.data;
 
     next();
