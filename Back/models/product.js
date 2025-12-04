@@ -44,6 +44,19 @@ export const Product = sequelize.define(
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
+
+    // CAMPO NUEVO: Almacena el array de rutas de imágenes individuales
+    images: {
+      type: DataTypes.JSON, // Ideal para arrays/objetos en MySQL
+      allowNull: true,
+      defaultValue: [],
+    },
+    
+    // CAMPO EXISTENTE: Almacena la ruta de la carpeta base (targetFolder)
+    productFolder: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   },
   {
     tableName: "products",   // nombre exacto en MySQL

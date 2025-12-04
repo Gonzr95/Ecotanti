@@ -11,3 +11,42 @@ Content-Type: application/json
     "price": "2300",
     "isActive": "true"
 } 
+
+
+### CREATE a product with Images
+POST http://localhost:3000/products
+Content-Type: multipart/form-data; boundary=---MyBoundary123
+
+---MyBoundary123
+Content-Disposition: form-data; name="productType"
+
+Papel Higienico
+---MyBoundary123
+Content-Disposition: form-data; name="brand"
+
+Higienol
+---MyBoundary123
+Content-Disposition: form-data; name="lineUp"
+
+Pro Max
+---MyBoundary123
+Content-Disposition: form-data; name="description"
+
+4x80 mts / 10 paquetes por bolson.
+---MyBoundary123
+Content-Disposition: form-data; name="stock"
+
+10
+---MyBoundary123
+Content-Disposition: form-data; name="price"
+
+2300
+---MyBoundary123
+Content-Disposition: form-data; name="isActive"
+
+true
+---MyBoundary123
+Content-Disposition: form-data; name="images"; filename="imagen1.jpg"
+
+< ./imagesTest/susex.jpg
+---MyBoundary123--
