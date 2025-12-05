@@ -82,3 +82,47 @@ export async function saveImages(files, targetFolder) {
     // Ahora 'imagePaths' contiene el array limpio de rutas guardadas en el disco.
     return imagePaths;
 };
+
+/*
+    valida que el producto exista haya stock y devuelve los productos para su uso posterior
+*/
+export async function checkCartProducts(cartProducts) {
+
+    try{
+        const dbProducts = await Product.findAll({
+            where: {
+                id: cartProducts.map(item => item.productId)
+            }
+        });
+        if(dbProducts.length !== cartProducts.length){
+            throw new Error("Some products in the cart do not exist in the database.");
+        };
+
+for(const cartItem of cartProducts){
+            
+            // Usamos find para obtener el objeto de la base de datos correspondiente
+            const dbProduct = dbProducts.find(p => p.id === cartItem.productId);
+
+            // Verificación de existencia (debería pasar si la verificación 2 es correcta)
+            if (!dbProduct) {
+                // Este caso es un fallback, pero no debería ocurrir si el chequeo de longitud fue exitoso
+                throw new Error(`Error interno: No se encontró el producto ${cartItem.productId} de la DB.`);
+            }
+
+            // Comprobamos el stock
+            if(dbProduct.stock < cartItem.quantity){
+                // Usamos la información del producto de la DB (dbProduct)
+                throw new Error(`El producto ${dbProduct.productType} ${dbProduct.lineUp} no cuenta con suficiente stock. La cantidad solicitada es ${cartItem.quantity}, pero solo hay ${dbProduct.stock} disponible.`);
+            }
+            
+            // Si quieres que el objeto del carrito tenga el precio del DB para uso posterior:
+            // cartItem.price = dbProduct.price; 
+        }
+        return dbProducts;
+    }
+    catch(error){
+        console.log("Error checking cart products:", error.message);
+        throw error;
+    }
+
+};

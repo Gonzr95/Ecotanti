@@ -1,7 +1,11 @@
 import { UniqueConstraintError } from "sequelize";
 import { Product } from "../models/product.js";
 
-import { checkProductExistence, checkImages, createFolder, saveImages} from "../services/product.service.js";
+import { checkProductExistence, 
+         checkImages, 
+         createFolder, 
+         saveImages } 
+from "../services/product.service.js";
 
 // ************* funciones del controlador *************
 /*

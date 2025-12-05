@@ -4,6 +4,7 @@ app.disable("x-powered-by");
 const port = process.env.PORT || 3000;
 import { router as userRouter } from "./routes/users.js";
 import { router as productsRouter } from "./routes/products.js";
+import { router as ticketsRouter } from "./routes/tickets.js";
 import cors from "cors";
 import { connectDB } from "./db/sequelize.js";
 connectDB();
@@ -24,7 +25,7 @@ app.use(express.json());
 
 app.use(userRouter);
 app.use(productsRouter);
-
+app.use(ticketsRouter);
 
 
 app.listen(port, () => {

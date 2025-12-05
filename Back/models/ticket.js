@@ -10,7 +10,7 @@ export const Ticket = sequelize.define(
         primaryKey: true,
     },
 
-    clientName: {
+    customerName: {
         type: DataTypes.STRING(32),
         allowNull: false,
     },

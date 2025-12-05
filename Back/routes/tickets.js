@@ -1,7 +1,9 @@
 import { Router } from "express";
 const router = Router();
-import { Product, Ticket } from "../models/ticket.js";
+import { Product_Ticket } from "../models/product_ticket.js";
 import { validateSchema } from "../middlewares/validator.js";
+import { createTicketSchema } from "../schemas/ticket.js";
+import { register } from "../controllers/ticket.js";
 
 
 // 1.desarrollar logica para el schema del body ticket
@@ -10,7 +12,9 @@ import { validateSchema } from "../middlewares/validator.js";
 // 
 
 
-router.post("/tickets", async (req, res) => {
+router.post("/tickets", 
+    validateSchema(createTicketSchema),
+    register);
 
 
-};
+export {router}
