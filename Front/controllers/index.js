@@ -1,3 +1,4 @@
+// ************ CLIENTE ************ //
 const btnLogin = document.getElementById("login-btn");
 btnLogin.addEventListener("click", () => {
 
@@ -12,7 +13,6 @@ btnLogin.addEventListener("click", () => {
     }   
     
 });
-
 
 /**
  * Verifica múltiples campos de entrada según una configuración provista.
@@ -71,3 +71,6 @@ function saveCustomerData() {
 
     console.log('Datos del cliente guardados en Local Storage:', customerData);
 }
+
+
+// ************ ADMINISTRADOR ************ //
