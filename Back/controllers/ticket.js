@@ -2,6 +2,7 @@ import { Ticket } from "../models/ticket.js"
 import { sequelize } from "../db/sequelize.js";
 import { checkCartProducts } from "../services/product.service.js";
 import Product from "../models/product.js";
+import { Product_Ticket } from "../models/product_ticket.js";
 
 
 /*
@@ -21,7 +22,7 @@ export async function register(req, res){
         const { customerName, cart: cartData } = req.body;
         //checkCartProducts valida existencia de id del producto y stock y devuelve los productos solicitados
         const dbProducts = await checkCartProducts(cartData);
-        console.log(dbProducts);
+        //console.log(dbProducts);
         if(!dbProducts){
             return res.status(400).json({ message: "Algunos productos no existen o no tienen stock suficiente." });
         }
@@ -39,7 +40,7 @@ export async function register(req, res){
             total += subtotal;
 
             ticketItemsData.push({
-                productId: productDB.id,
+                productID: productDB.id,
                 quantity: quantity,
                 price: price,
                 subtotal: subtotal
@@ -58,12 +59,12 @@ export async function register(req, res){
         // Agregamos el ID del ticket recién creado a nuestros items preparados
         const rowsToInsert = ticketItemsData.map(item => ({
             ...item,
-            TicketId: newTicket.id
+            ticketID: newTicket.id
         }));
 
 
         // Usamos bulkCreate para eficiencia (una sola consulta INSERT grande)
-        await ProductTicket.bulkCreate(rowsToInsert, { transaction: t });
+        await Product_Ticket.bulkCreate(rowsToInsert, { transaction: t });
 
         // --- 7. Commit de la transacción ---
         await t.commit();

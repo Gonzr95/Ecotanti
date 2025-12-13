@@ -2,8 +2,26 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../db/sequelize.js";
 
 export const Product_Ticket = sequelize.define('Product_Ticket', {
-    // Clave Foránea de Ticket (TicketId) y Product (ProductId) serán añadidas automáticamente
-    // por Sequelize, actuando como clave primaria compuesta.
+    ticketID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true, // Parte de la clave compuesta (opcional pero recomendado)
+        references: {
+            model: 'tickets', // Nombre de la tabla en la BD (asegúrate que coincida)
+            key: 'id'
+        }
+    },
+
+    productID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true, // Parte de la clave compuesta
+        references: {
+            model: 'products', // Nombre de la tabla en la BD
+            key: 'id'
+        }
+    },
+
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,

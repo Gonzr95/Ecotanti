@@ -9,6 +9,8 @@ import cors from "cors";
 import { connectDB } from "./db/sequelize.js";
 connectDB();
 
+console.log("No te olvides de cargar las variables de entorno. BD configs, JWT_SECRET lugar de almacenamiento de las fotos.");
+
 app.use(cors({
     origin: [
         //frontend URLS
