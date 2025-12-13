@@ -73,3 +73,60 @@ export async function register(req, res) {
         return res.status(500).json({ message: "Error interno del servidor", detail: error.message });
     }
 };
+
+export const getCategories = async (req, res) => {
+  try {
+    // Buscamos solo la columna productType y agrupamos para que no se repitan
+    const categoriesData = await Product.findAll({
+      attributes: ["productType"],
+      group: ["productType"],
+      // Opcional: Solo traer categorías de productos activos
+      where: {
+        isActive: true 
+      },
+      order: [["productType", "ASC"]] // Orden alfabético
+    });
+
+    // categoriesData será algo como: 
+    // [ { productType: "Farol" }, { productType: "Plafon" } ]
+    
+    // Lo transformamos a un array simple de strings para el frontend:
+    // [ "Farol", "Plafon" ]
+    const categories = categoriesData.map(item => item.productType);
+
+    return res.status(200).json(categories);
+
+  } catch (error) {
+    console.error("Error al obtener categorías:", error);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
+
+export const getAllProducts = async (req, res) => {
+  try {
+    // 1. Extraemos la categoría de los query params (req.query)
+    // Si la URL es: /products?category=Farol -> category será "Farol"
+    // Si la URL es: /products -> category será undefined
+    const { category } = req.query;
+
+    // 2. Construimos el objeto "where" dinámicamente
+    const whereCondition = {};
+    
+    if (category) {
+      whereCondition.productType = category; // Filtramos por el campo productType
+      whereCondition.isActive = true;        // Opcional: solo activos
+    } else {
+      whereCondition.isActive = true;
+    }
+
+    // 3. Hacemos la consulta
+    const products = await Product.findAll({
+      where: whereCondition
+    });
+
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener productos" });
+  }
+}

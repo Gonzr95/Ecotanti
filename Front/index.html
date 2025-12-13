@@ -1,17 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="./styles/index.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECOTANTI</title>
 </head>
 <body>
-    <section class="welcome">
-        <div>
-            <p>aca ca el inicio de sesion</p>
-            <button id="login-btn">Iniciar sesion</button>
-        </div>
-    </section>
+    <header>
+        <button id="admin-btn">
+            SOY ADMIN
+        </button>
+    </header>
+    <main>
+        <section class="welcome-section">
+                <h2>¡Bienvenido!</h2>
+                <input
+                    type="text"
+                    id="name-input"
+                    class="name-input"
+                    placeholder="Nombre"
+                />
+                <p id="name-input-error">
+
+                </p>
+
+                <input
+                    type="text"
+                    id="lastName-input"
+                    class="client-inputs"
+                    placeholder="Apellido"
+                />
+                <p id="lastName-input-error">
+
+                </p>
+                <button class="btn-ingresar" id="login-btn">
+                    Ingresar
+                </button>
+        </section>
+
+    </main>
 </body>
-<script src="controllers//index.js"></script>
+<script src="./controllers/index.js"></script>
 </html>

@@ -15,13 +15,13 @@ app.use(cors({
     origin: [
         //frontend URLS
         "http://localhost:5500",
-        "http://localhost:5500"
+        "http://127.0.0.1:5500"
         //localhost
         //ip
     ],
     // investigar esto
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    //credentials: true,
 }));
 app.use(express.json());
 

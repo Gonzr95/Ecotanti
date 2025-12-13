@@ -3,8 +3,9 @@ const router = Router();
 import { upload } from "../middlewares/upload.js";
 import { createProductSchema } from "../schemas/product.js";
 import { validateSchema } from "../middlewares/validator.js";
-import { register } from "../controllers/product.js";
+import { register, getCategories, getAllProducts} from "../controllers/product.js";
 
+// ------ RUTAS ESPECÍFICAS PRIMERO ------
 
 //Imagenes es el nombre del campo que viene del from data
 router.post("/products", 
@@ -13,3 +14,6 @@ router.post("/products",
     register);
 
 export {router};
+
+router.get("/products", getAllProducts);
+router.get("/products/categories", getCategories);
