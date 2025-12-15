@@ -27,15 +27,13 @@ export async function checkProductExistence(productData) {
     });
     
     if (existingProduct) {
-        // ❌ ANTES: return res.status(409)... (res no existe aquí)
-        // ✅ AHORA: Lanzamos un error simple
         throw new Error("PRODUCT_EXISTS");
     }
 }
 
 export async function checkImages(files) {
         if( !files || files.length === 0 ) {
-        // ✅ Lanzamos error si no hay imágenes
+        //Lanzamos error si no hay imágenes
         throw new Error("NO_IMAGES");
     }
     console.log("Imágenes recibidas: ", files.length);
