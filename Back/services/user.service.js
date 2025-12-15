@@ -1,7 +1,7 @@
 import { User } from '../models/user.js'; 
 import { hashPassword, comparePassword} from '../utils/bcrypt.js'; 
 import { generateToken } from '../utils/jwt.js';
-import { BlacklistedToken } from '../models/blacklistedToken.js';
+import { BlacklistedToken } from '../models/blackListedToken.js';
 
 export async function register(userData) {
     const { firstName, lastName, mail, pass } = userData;

@@ -72,5 +72,12 @@ function saveCustomerData() {
     console.log('Datos del cliente guardados en Local Storage:', customerData);
 }
 
+document.getElementById('quick-access-btn').addEventListener('click', () => {
+
+    document.getElementById('name-input').value = 'Cliente';
+    document.getElementById('lastName-input').value = 'Demo';
+
+});
+
 
 // ************ ADMINISTRADOR ************ //

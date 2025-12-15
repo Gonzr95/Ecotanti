@@ -9,6 +9,6 @@ export const BlacklistedToken = sequelize.define('BlacklistedToken', {
     }
     // Sequelize añade createdAt y updatedAt automáticamente
 }, {
-    tableName: "blackListerTokens",   // nombre exacto en MySQL
+    tableName: "blackListedTokens",   // nombre exacto en MySQL
     timestamps: true
 });
