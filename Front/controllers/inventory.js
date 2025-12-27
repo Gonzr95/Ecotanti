@@ -1,3 +1,4 @@
+import { devBackendURL, devBackendPort } from '../configs/config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     greetUser();
@@ -22,7 +23,7 @@ async function loadCategories() {
     
     try {
         
-        const response = await fetch('http://localhost:3001/products/categories');
+        const response = await fetch(`${devBackendURL}${devBackendPort}/products/categories`);
         if (!response.ok) throw new Error('Error al conectar con el servidor');
         const categories = await response.json();
         
@@ -30,7 +31,7 @@ async function loadCategories() {
         menuContainer.innerHTML = '';
 
 
-        for(i= 0; i < categories.length; i++)
+        for(let i = 0; i < categories.length; i++)
         {
             const button = document.createElement('button');
 
