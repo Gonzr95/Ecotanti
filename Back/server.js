@@ -2,6 +2,7 @@ import express from "express";
 const app = express();
 app.disable("x-powered-by");
 const port = process.env.PORT || 3000;
+import path from 'path';
 import { router as userRouter } from "./routes/users.js";
 import { router as productsRouter } from "./routes/products.js";
 import { router as ticketsRouter } from "./routes/tickets.js";
@@ -10,7 +11,8 @@ import { connectDB } from "./db/sequelize.js";
 connectDB();
 
 console.log("No te olvides de cargar las variables de entorno. BD configs, JWT_SECRET lugar de almacenamiento de las fotos.");
-
+// Permitir acceso público a la carpeta 'uploads'
+app.use('/uploads', express.static('uploads'));
 app.use(cors({
     origin: [
         //frontend URLS

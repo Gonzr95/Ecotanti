@@ -9,13 +9,24 @@ const saveToDisk = async (file, targetFolder) => {
     const ext = path.extname(file.originalname);
     const filename = `img-${uniqueSuffix}${ext}`;
     
-    // Ruta completa: uploads/papel-higienico-pro-max/img-123.jpg
-    const filePath = path.join(targetFolder, filename); 
-
-    // Escribir el Buffer de la memoria al disco
-    await fs.writeFile(filePath, file.buffer);
+    // PASO A: Guardar en el DISCO DURO (Sistema Operativo)
+    // Usamos path.join para que Windows no se queje
+    const systemPath = path.join(targetFolder, filename); 
     
-    return filePath;
+    // Escribimos el archivo usando la ruta de sistema
+    await fs.writeFile(systemPath, file.buffer);
+    
+    // PASO B: Generar ruta para la WEB (Base de Datos)
+    // 1. Tomamos la ruta de carpeta y archivo
+    // 2. FORZAMOS el cambio de barras invertidas (\) a barras normales (/)
+    // Esto asegura que el frontend reciba "uploads/carpeta/foto.jpg"
+    const webPath = path.join(targetFolder, filename).split(path.sep).join('/');
+
+    // OPCIONAL: Si quieres guardar la URL COMPLETA en base de datos:
+    // return `${process.env.BACKEND_URL}/${webPath}`;
+    
+    // RECOMENDADO: Guardar ruta relativa normalizada
+    return webPath; 
 };
 
 export async function checkProductExistence(productData) {

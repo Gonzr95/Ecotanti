@@ -35,9 +35,10 @@ export const createProductSchema = z.object({
     .nonnegative(),
 
     isActive: z
-    .string()
-    .refine(v => v === "true" || v === "false", {
-        message: "isActive debe ser 'true' o 'false'"
+    .enum(["true", "false"], {
+    errorMap: () => ({
+      message: "isActive debe ser 'true' o 'false'"
+    })
     })
     .transform(v => v === "true")
 

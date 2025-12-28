@@ -1,0 +1,91 @@
+/*------------GRID AND CARD------------*/
+#products-container{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 270px));
+  column-gap: 30px;
+  row-gap: 30px;
+  align-items: start;
+  justify-content: center;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.1s ease-in;
+}
+
+.product-card:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+#products-container img{
+    width: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+    align-self: flex-start; /* garantiza que no se centre */
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 140px;
+  margin-bottom: 5px;
+  margin-left: 4px;
+  flex-direction: row;
+  cursor: pointer;
+  border-style: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+.div-cantidad {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.div-quitar {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+/*------------PRODUCT INFO------------*/
+
+.product-name {
+  /* color: #303031; Se comentó para evitar confilictos con el modo oscuro */ 
+  font-size: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.product-price {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  font-size: 20px;
+  font-weight: 600;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+
+/*------------PRODUCT INFO------------*/
+.card-buttons {
+    margin-top: auto;  /* Empuja este div hacia el fondo */
+}

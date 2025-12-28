@@ -66,7 +66,7 @@ async function loadProducts(category) {
 
     try {
         // 2. Seguridad: encodeURIComponent ya lo tenías, ¡bien hecho! Evita errores con espacios o caracteres especiales.
-        const response = await fetch(`http://localhost:3001/products?category=${encodeURIComponent(category)}`);
+        const response = await fetch(`${devBackendURL}${devBackendPort}/products?category=${encodeURIComponent(category)}`);
         
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
         
@@ -112,31 +112,38 @@ function createProductCard(product) {
     const card = document.createElement('article');
     card.classList.add('product-card');
 
-    // Imagen (Asumiendo que tu backend devuelve una propiedad 'imageUrl' o similar)
-    // Si usas Cloudflare, aquí vendría la URL optimizada.
+
     const img = document.createElement('img');
-    img.src = product.imageUrl || 'https://via.placeholder.com/300'; // Fallback si no hay imagen
+    img.src = `${devBackendURL}${devBackendPort}/${product.images[0]}`|| 'https://via.placeholder.com/300'; // Fallback si no hay imagen
     img.alt = `Imagen de ${product.name}`;
     img.loading = "lazy"; // Performance: carga diferida de imágenes
 
     // Título
     const title = document.createElement('h3');
-    title.textContent = product.name;
+    title.textContent = product.brand + ' ' + product.lineUp;
+
+    // Descripcion
+    const description = document.createElement('p');
+    description.classList.add('description');
+    description.textContent = product.description;
 
     // Precio
     const price = document.createElement('p');
     price.classList.add('price');
-    // Buena práctica: Usar Intl.NumberFormat para monedas
+
+
     price.textContent = formatCurrency(product.price);
 
-    // Botón de acción (opcional)
-    const button = document.createElement('button');
-    button.textContent = 'Ver detalle';
-    button.classList.add('btn-detail');
-    button.onclick = () => console.log(`Ver producto ID: ${product.id}`);
+    
+    const addToCartBtn = document.createElement('button');
+    addToCartBtn.textContent = 'Agregar al carrito';
+    addToCartBtn.classList.add('add-to-cart-btn');
+    // Aquí podrías agregar un event listener para manejar el clic en el botón
+
+
 
     // Ensamblaje
-    card.append(img, title, price, button);
+    card.append(img, title, description, price, addToCartBtn);
     
     return card;
 }
