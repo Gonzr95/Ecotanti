@@ -1,8 +1,11 @@
 import { devBackendURL, devBackendPort } from '../configs/config.js';
+import { Cart } from './cart.js';
+const MyCart = new Cart();
 
 document.addEventListener('DOMContentLoaded', () => {
     greetUser();
     loadCategories();
+    
 });
 
 function greetUser() {
@@ -14,7 +17,6 @@ function greetUser() {
     }
 
 };
-
 
 // --- 2. Lógica de Fetch y Renderizado ---
 
@@ -209,7 +211,17 @@ function createProductCard(product) {
     // Modificamos el evento para capturar la cantidad seleccionada actual
     addToCartBtn.addEventListener('click', () => {
         const quantityToAdd = parseInt(qtyInput.value);
+
+        if(quantityToAdd > product.stock) {
+            alert("No hay suficiente stock");
+            return;
+        }
+
+        MyCart.addProduct(product.id, quantityToAdd);
+        alert(`Se agregaron ${quantityToAdd} unidad(es) de "${product.brand} ${product.lineUp}" al carrito.`);
+
         console.log(`Agregando ${quantityToAdd} unidad(es) de ${product.name} al carrito.`);
+        qtyInput.value = 1;
         
         // Aquí llamarías a tu función real, ej:
         // addToCart(product.id, quantityToAdd);
@@ -229,3 +241,8 @@ function formatCurrency(value) {
         minimumFractionDigits: 0
     }).format(value);
 }
+
+const finishBuyBtn = document.getElementById('finish-buy-btn');
+finishBuyBtn.addEventListener('click', () => {
+    window.location.href = 'checkout.html';
+});
