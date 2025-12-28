@@ -135,16 +135,89 @@ function createProductCard(product) {
     price.textContent = formatCurrency(product.price);
 
     
+    // ==========================================
+    // NUEVA LÓGICA: Selector de Cantidad
+    // ==========================================
+    
+    const quantityContainer = document.createElement('div');
+    quantityContainer.classList.add('quantity-controls');
+
+    // Botón Menos (-)
+    const minusBtn = document.createElement('button');
+    minusBtn.textContent = '-';
+    minusBtn.classList.add('qty-btn', 'minus');
+
+    // Input de Cantidad
+    const qtyInput = document.createElement('input');
+    qtyInput.type = 'number';
+    qtyInput.value = 1; 
+    qtyInput.min = 1;
+    qtyInput.max = product.stock; // Límite basado en el stock real
+    qtyInput.classList.add('qty-input');
+
+    // Botón Más (+)
+    const plusBtn = document.createElement('button');
+    plusBtn.textContent = '+';
+    plusBtn.classList.add('qty-btn', 'plus');
+
+    // Lógica del botón (-)
+    minusBtn.addEventListener('click', () => {
+        let currentValue = parseInt(qtyInput.value) || 1;
+        if (currentValue > 1) {
+            qtyInput.value = currentValue - 1;
+        }
+    });
+
+    // Lógica del botón (+) con validación de Stock
+    plusBtn.addEventListener('click', () => {
+        let currentValue = parseInt(qtyInput.value) || 1;
+        if (currentValue < product.stock) {
+            qtyInput.value = currentValue + 1;
+        } else {
+            // Opcional: Feedback visual si intenta superar el stock
+            qtyInput.classList.add('error-shake'); 
+            setTimeout(() => qtyInput.classList.remove('error-shake'), 500);
+        }
+    });
+
+    // Validación manual (si el usuario escribe en el input)
+    qtyInput.addEventListener('change', () => {
+        let currentValue = parseInt(qtyInput.value);
+        
+        // Si es menor a 1 o no es un número, volver a 1
+        if (isNaN(currentValue) || currentValue < 1) {
+            qtyInput.value = 1;
+        } 
+        // Si supera el stock, setear al máximo disponible
+        else if (currentValue > product.stock) {
+            qtyInput.value = product.stock;
+            alert(`Solo quedan ${product.stock} unidades disponibles.`);
+        }
+    });
+
+    // Agregar elementos al contenedor de cantidad
+    quantityContainer.append(minusBtn, qtyInput, plusBtn);
+
+    // ==========================================
+    // FIN NUEVA LÓGICA
+    // ==========================================
+
     const addToCartBtn = document.createElement('button');
     addToCartBtn.textContent = 'Agregar al carrito';
     addToCartBtn.classList.add('add-to-cart-btn');
-    // Aquí podrías agregar un event listener para manejar el clic en el botón
 
+    // Modificamos el evento para capturar la cantidad seleccionada actual
+    addToCartBtn.addEventListener('click', () => {
+        const quantityToAdd = parseInt(qtyInput.value);
+        console.log(`Agregando ${quantityToAdd} unidad(es) de ${product.name} al carrito.`);
+        
+        // Aquí llamarías a tu función real, ej:
+        // addToCart(product.id, quantityToAdd);
+    });
 
 
     // Ensamblaje
-    card.append(img, title, description, price, addToCartBtn);
-    
+    card.append(img, title, description, price, quantityContainer, addToCartBtn);    
     return card;
 }
 

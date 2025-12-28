@@ -82,7 +82,8 @@ export const getCategories = async (req, res) => {
       group: ["productType"],
       // Opcional: Solo traer categorías de productos activos
       where: {
-        //isActive: true 
+        isActive: true,
+        //stock : { gt: 0 }
       },
       order: [["productType", "ASC"]] // Orden alfabético
     });

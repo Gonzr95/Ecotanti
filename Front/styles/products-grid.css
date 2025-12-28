@@ -89,3 +89,58 @@
 .card-buttons {
     margin-top: auto;  /* Empuja este div hacia el fondo */
 }
+
+/* Contenedor de los controles */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* O flex-start según tu diseño */
+    gap: 5px;
+    margin: 10px 0;
+}
+
+/* Estilo del input (quita las flechas por defecto del navegador si quieres) */
+.qty-input {
+    width: 50px;
+    text-align: center;
+    font-size: 1rem;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Estilo de los botones +/- */
+.qty-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qty-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.qty-btn:active {
+    background-color: #d0d0d0;
+}
+
+/* Animación opcional para cuando supera el stock */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.error-shake {
+  animation: shake 0.3s ease-in-out;
+  border-color: red;
+}
