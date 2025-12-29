@@ -32,7 +32,7 @@ export class Cart {
      * @param {string|number} productId - El ID del producto
      * @param {number} quantity - La cantidad a agregar
      */
-    addProduct(productId, quantity) {
+    addProduct(productId, quantity, productData) {
         // 1. Buscamos si el producto ya existe en el carrito
         const existingProductIndex = this.products.findIndex(item => item.id === productId);
 
@@ -41,7 +41,10 @@ export class Cart {
             console.log(`Producto ${productId} actualizado. Nueva cantidad: ${this.products[existingProductIndex].quantity}`);
         } else {
             // NO EXISTE: Lo agregamos como objeto nuevo
-            this.products.push({ id: productId, quantity: quantity });
+            this.products.push({ 
+                id: productId, 
+                quantity: quantity, 
+                product: productData });
             console.log(`Producto ${productId} agregado al carrito.`);
         }
 

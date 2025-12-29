@@ -208,7 +208,7 @@ function createProductCard(product) {
     addToCartBtn.textContent = 'Agregar al carrito';
     addToCartBtn.classList.add('add-to-cart-btn');
 
-    // Modificamos el evento para capturar la cantidad seleccionada actual
+    // funcionamiento de anadir al carritp
     addToCartBtn.addEventListener('click', () => {
         const quantityToAdd = parseInt(qtyInput.value);
 
@@ -217,14 +217,20 @@ function createProductCard(product) {
             return;
         }
 
-        MyCart.addProduct(product.id, quantityToAdd);
+        const productData = {
+            name: product.name,
+            brand: product.brand,
+            lineUp: product.lineUp,
+            price: product.price,
+            image: img.src
+        };
+        //hace falta 1)nombre, 2)precio, 3)url imagen, 4)descripcion
+        MyCart.addProduct(product.id, quantityToAdd, productData);
         alert(`Se agregaron ${quantityToAdd} unidad(es) de "${product.brand} ${product.lineUp}" al carrito.`);
 
         console.log(`Agregando ${quantityToAdd} unidad(es) de ${product.name} al carrito.`);
         qtyInput.value = 1;
         
-        // Aquí llamarías a tu función real, ej:
-        // addToCart(product.id, quantityToAdd);
     });
 
 
