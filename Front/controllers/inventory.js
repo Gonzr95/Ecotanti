@@ -132,8 +132,6 @@ function createProductCard(product) {
     // Precio
     const price = document.createElement('p');
     price.classList.add('price');
-
-
     price.textContent = formatCurrency(product.price);
 
     
@@ -222,7 +220,8 @@ function createProductCard(product) {
             brand: product.brand,
             lineUp: product.lineUp,
             price: product.price,
-            image: img.src
+            image: img.src,
+            stock: product.stock
         };
         //hace falta 1)nombre, 2)precio, 3)url imagen, 4)descripcion
         MyCart.addProduct(product.id, quantityToAdd, productData);

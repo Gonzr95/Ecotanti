@@ -10,16 +10,13 @@ export class Cart {
         if (storedCart) {//si hay algo
             try {
                 this.products = JSON.parse(storedCart);
-                console.log("Carrito recuperado del storage:", this.products);
             } catch (error) {
-                console.error("Error al parsear el carrito, reseteando...");
                 // this.products = []; redundante
                 this.saveToStorage();
             }
         } else { //si ta vacio
             // this.products = []; redundante
             this.saveToStorage();
-            console.log("No había carrito previo. Se creó uno nuevo en Local Storage.");
         }
     }
 
