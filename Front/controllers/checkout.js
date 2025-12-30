@@ -1,27 +1,28 @@
+import { Cart } from "./cart.js";
+const MyCart = new Cart();
+const orderSummary =  document.getElementById('order-summary');
+
 document.addEventListener('DOMContentLoaded', () => {
     loadCart();
 });
 
 function loadCart(){
-    const cart = localStorage.getItem('cart');
-    if(cart){
-        try{
-            const products = JSON.parse(cart);
-            products.forEach(product => {
-                createProductCard(product);
-            });
-        }catch(error){
-            console.error("Error al cargar el carrito:", error);
-        }
+    if(MyCart){
+        MyCart.products.forEach(product => {
+            createProductCard(product);
+        });
+    }
+    else{
+        console.error("No se pudo cargar el carrito.");
     }
 }
 
 function createProductCard(product){
-    const checkoutGrid = document.getElementById('checkout-grid');
 
     const productCard = document.createElement('div');
     productCard.classList.add('product-card');
 
+    //--------- Imagen---------
     const imgContainer = document.createElement('div');
     imgContainer.classList.add('img-container');
 
@@ -31,17 +32,16 @@ function createProductCard(product){
     img.loading = "lazy"; // Performance: carga diferida de imágenes
     imgContainer.appendChild(img);
 
+
+    //--------- Resumen del producto---------
     const productDetails = document.createElement('div');
     productDetails.classList.add('product-details');
     
     const title = document.createElement('h3');
     title.textContent = product.product.brand + ' - ' + product.product.lineUp;
 
-    const price = document.createElement('p');
-    price.classList.add('price');
-    price.textContent = formatCurrency(product.product.price);
 
-
+    //--------- cantidad del producto---------
     const quantityContainer = document.createElement('div');
     quantityContainer.classList.add('quantity-controls');
 
@@ -55,7 +55,7 @@ function createProductCard(product){
     qtyInput.type = 'number';
     qtyInput.value = product.quantity; 
     qtyInput.min = 1;
-    qtyInput.max = product.stock; // Límite basado en el stock real
+    qtyInput.max = product.product.stock;
     qtyInput.classList.add('qty-input');
 
     // Botón Más (+)
@@ -69,6 +69,7 @@ function createProductCard(product){
         if (currentValue > 1) {
             qtyInput.value = currentValue - 1;
         }
+        subtotal.textContent = `Subtotal: ${formatCurrency(product.product.price * qtyInput.value)}`;
     });
 
     // Lógica del botón (+) con validación de Stock
@@ -81,8 +82,16 @@ function createProductCard(product){
             qtyInput.classList.add('error-shake'); 
             setTimeout(() => qtyInput.classList.remove('error-shake'), 500);
         }
+                subtotal.textContent = `Subtotal: ${formatCurrency(product.product.price * qtyInput.value)}`;
     });
 
+        const price = document.createElement('p');
+    price.classList.add('price');
+    price.textContent = formatCurrency(product.product.price);
+
+    const subtotal = document.createElement('p');
+    subtotal.classList.add('subtotal');
+    subtotal.textContent = `Subtotal: ${formatCurrency(product.product.price * qtyInput.value)}`;
     // Validación manual (si el usuario escribe en el input)
     qtyInput.addEventListener('change', () => {
         let currentValue = parseInt(qtyInput.value);
@@ -96,6 +105,9 @@ function createProductCard(product){
             qtyInput.value = product.stock;
             alert(`Solo quedan ${product.stock} unidades disponibles.`);
         }
+        // Actualizar subtotal al cambiar cantidad
+        subtotal.textContent = `Subtotal: ${formatCurrency(product.product.price * qtyInput.value)}`;
+
     });
     quantityContainer.append(
         minusBtn,
@@ -105,18 +117,32 @@ function createProductCard(product){
 
 
 
+    //-------------- delete button -----------------
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.innerHTML = '&times;'; // Símbolo de "X"
+
+    deleteBtn.addEventListener('click', () => {
+        orderSummary.removeChild(productCard);
+        MyCart.removeProduct(product.id);
+        alert(`Producto ${product.product.brand} - ${product.product.lineUp} eliminado del carrito.`);
+
+    });
+
 
     productDetails.append(
         title,
         quantityContainer,
-        price
+        price,
+        subtotal,
+        deleteBtn
     );
     productCard.append(
         imgContainer, 
         productDetails
     );
-    checkoutGrid.appendChild(productCard);
-
+    orderSummary.appendChild(productCard);
+    
 }
 
 

@@ -50,6 +50,12 @@ export class Cart {
         // Opcional: Actualizar contador del header si tienes uno
         // updateCartCounter(); 
     }
+
+    removeProduct(productId) {
+        //reemplazamos el array actual x uno que no contenga el producto a eliminar
+        this.products = this.products.filter(item => item.id !== productId);
+        this.saveToStorage();
+    }
 }
 
 
