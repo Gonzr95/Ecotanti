@@ -16,11 +16,14 @@ import { Product_Ticket } from "../models/product_ticket.js";
 */
 
 export async function register(req, res){
+    console.log("Iniciando proceso de creación de ticket...");
     const t = await sequelize.transaction();
     try{
 
-        const { customerName, cart: cartData } = req.body;
+        //cart propiedad que viene del body
+        const { customerData, cart: cartData } = req.body;
         //checkCartProducts valida existencia de id del producto y stock y devuelve los productos solicitados
+        console.log("Cart data recibida en ticket controller:", cartData);
         const dbProducts = await checkCartProducts(cartData);
         //console.log(dbProducts);
         if(!dbProducts){
@@ -33,7 +36,7 @@ export async function register(req, res){
 
         for (const cartItem of cartData) {
             // Encontramos el producto real de la DB correspondiente al item del carrito
-            const productDB = dbProducts.find(p => p.id === cartItem.productId);
+            const productDB = dbProducts.find(p => p.id === cartItem.id);
             const price = productDB.price;
             const quantity = cartItem.quantity;
             const subtotal = price * quantity;
@@ -48,9 +51,9 @@ export async function register(req, res){
 
             await productDB.decrement('stock', { by: quantity, transaction: t } );            
         }
-
         const newTicket = await Ticket.create({
-            customerName: customerName,
+            customerName: customerData.name,
+            customerLastName: customerData.lastName,
             total: total
         }, { transaction: t }); 
 

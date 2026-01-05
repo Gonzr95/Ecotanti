@@ -56,6 +56,11 @@ export class Cart {
         this.products = this.products.filter(item => item.id !== productId);
         this.saveToStorage();
     }
+
+    clearCart() {
+        this.products = [];
+        this.saveToStorage();
+    }
 }
 
 

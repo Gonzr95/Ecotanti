@@ -15,6 +15,11 @@ export const Ticket = sequelize.define(
         allowNull: false,
     },
 
+    customerLastName: {
+        type: DataTypes.STRING(32),
+        allowNull: false,
+    },
+
     total: {
         type: DataTypes.DOUBLE,
         allowNull: false,

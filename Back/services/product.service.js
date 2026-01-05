@@ -100,7 +100,7 @@ export async function checkCartProducts(cartProducts) {
     try{
         const dbProducts = await Product.findAll({
             where: {
-                id: cartProducts.map(item => item.productId)
+                id: cartProducts.map(item => item.id)
             }
         });
         if(dbProducts.length !== cartProducts.length){
@@ -110,7 +110,7 @@ export async function checkCartProducts(cartProducts) {
 for(const cartItem of cartProducts){
             
             // Usamos find para obtener el objeto de la base de datos correspondiente
-            const dbProduct = dbProducts.find(p => p.id === cartItem.productId);
+            const dbProduct = dbProducts.find(p => p.id === cartItem.id);
 
             // Verificación de existencia (debería pasar si la verificación 2 es correcta)
             if (!dbProduct) {

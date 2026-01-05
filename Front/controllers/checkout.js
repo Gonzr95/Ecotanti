@@ -1,6 +1,7 @@
 import { Cart } from "./cart.js";
 const MyCart = new Cart();
 const orderSummary =  document.getElementById('order-summary');
+import { devBackendURL, devBackendPort } from "../configs/config.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     loadCart();
@@ -242,7 +243,89 @@ function calculateTotal() {
 
     paymentSummary.append(
         producstQty,
-        totalPayment
+        totalPayment,
     );
+
+    if(MyCart.products.length !== 0){
+        const finishPurchaseBtn = createFinishPurchaseButton();
+        paymentSummary.append(
+            finishPurchaseBtn
+        );
+    }
+
+
 }
 
+function createFinishPurchaseButton() {
+    const finishPurchaseBtn = document.createElement('button');
+    finishPurchaseBtn.textContent = 'Generar orden de compra';
+    finishPurchaseBtn.classList.add('finish-purchase-btn');
+
+    // Hacemos el callback del listener 'async' para poder esperar a que termine la compra
+    finishPurchaseBtn.addEventListener('click', async (e) => {
+        // Opcional: Deshabilitar botón para evitar doble click
+        finishPurchaseBtn.disabled = true; 
+        finishPurchaseBtn.textContent = "Procesando...";
+
+        // LLAMAMOS A LA FUNCIÓN Y ESPERAMOS
+        await finishPurchase();
+
+        // Reactivamos el botón por si hubo error
+        finishPurchaseBtn.disabled = false;
+        finishPurchaseBtn.textContent = 'Generar orden de compra';
+    });
+    
+    return finishPurchaseBtn;
+}
+
+async function finishPurchase() {
+    // 1. LEER DATOS (Antes de borrar nada)
+    const cartRaw = localStorage.getItem('cart');
+    const customerRaw = localStorage.getItem('customerData');
+
+    if (!cartRaw || !customerRaw) {
+        alert("Faltan datos para procesar la compra");
+        return;
+    }
+
+    const orderData = {
+        customerData: JSON.parse(customerRaw),
+        cart: JSON.parse(cartRaw),
+    };
+
+    console.log("Datos de la orden a enviar al backend:", orderData);
+
+
+    try {
+        // 2. HACER EL FETCH
+        const response = await fetch(`${devBackendURL}${devBackendPort}/tickets`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orderData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            // Si el backend devuelve error (ej: 400 o 500), lanzamos error para caer en el catch
+            throw new Error(result.message || 'Error en el servidor');
+        }
+
+        // 3. SOLO SI TODO SALIÓ BIEN: Limpiar y Redirigir
+        console.log('Orden generada:', result);
+        alert('¡Gracias por su compra! Su pedido ha sido procesado exitosamente.');
+        
+        localStorage.removeItem('cart');
+        localStorage.removeItem('customerData'); // Opcional, quizás quieras mantener al usuario logueado
+        
+        // Y finalmente nos vamos
+        window.location.href = 'index.html'; 
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert(`Hubo un error: ${error.message}. Por favor intente nuevamente.`);
+        // NO borramos el carrito ni redirigimos, para que el usuario pueda intentar de nuevo
+    }
+}
