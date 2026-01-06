@@ -6,12 +6,18 @@
     font-family: 'Poppins', sans-serif;
     -webkit-tap-highlight-color: transparent; /* Elimina flash azul en móbiles */
 }
-
+main{
+    display: flex;
+    justify-content: center;
+}
 body {
     background-color: #f4f6f8;
     padding-bottom: 120px; /* Espacio para el footer fijo */
     padding-top: 50px;    /* Espacio para el header fijo */
 }
+
+
+
 
 /* --- 2. HEADER FIJO (Inventario + Saludo + Categorías) --- */
 /* Creamos un contenedor virtual para lo que está arriba */
@@ -25,19 +31,19 @@ body {
     z-index: 1000;
     box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     padding-bottom: 10px;
+    display: flex;              
+    flex-direction: column;     /* Elementos uno debajo del otro */
+    align-items: center;        /* Centra horizontalmente los hijos */
+    text-align: center;         /* Asegura que el texto interno también se centre */
+    padding-bottom: 10px;
+
 }
 
-/* Estilo para el <p>Inventario</p> */
-.brand-header {
-    padding: 15px 20px 5px 20px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: -0.5px;
-}
-
-#greeting-section {
-    padding: 0 20px 10px 20px;
+/* Aseguramos que los contenedores internos no bloqueen el centrado */
+.brand-header, #greeting-section {
+    width: 100%;             /* Ocupan todo el ancho */
+    max-width: 1200px;       /* Pero con un límite razonable */
+    text-align: center;      /* Texto al centro */
 }
 
 #greeting-h1 {
@@ -46,17 +52,30 @@ body {
     font-weight: 400;
 }
 
-/* --- 3. CATEGORIAS --- */
+
+
 #categories-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* NUEVO: contenedor interno centrado */
+.categories-inner {
     display: flex;
     gap: 10px;
     overflow-x: auto;
     padding: 5px 20px 10px 20px;
-    /* Ocultar scrollbars */
-    scrollbar-width: none; 
-    -ms-overflow-style: none;
+    max-width: 1200px;
+    width: 100%;
+    justify-content: center;
+    scrollbar-width: none;
 }
-#categories-container::-webkit-scrollbar {
+
+.categories-inner::-webkit-scrollbar {
+    display: none;
+}
+#categories-inner::-webkit-scrollbar {
     display: none;
 }
 
@@ -78,16 +97,26 @@ body {
     border-color: #0f172a;
 }
 
+
+
 /* --- 4. GRILLA DE PRODUCTOS --- */
 #products-container {
     display: grid;
     /* Esto hace que las columnas se ajusten solas. Minimo 160px ancho */
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    justify-items: center;
+    
+    
     gap: 20px;
     padding: 20px;
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
 }
+
+
+
+
 
 /* --- 5. ESTILOS DE LA CARD (Lo más importante) --- */
 .product-card {
@@ -214,6 +243,11 @@ body {
 .add-to-cart-btn:active {
     transform: scale(0.98);
 }
+
+
+
+
+
 
 /* --- 8. FOOTER STICKY --- */
 #footer {
