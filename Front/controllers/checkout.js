@@ -315,7 +315,32 @@ async function finishPurchase() {
 
         // 3. SOLO SI TODO SALIÓ BIEN: Limpiar y Redirigir
         console.log('Orden generada:', result);
-        alert('¡Gracias por su compra! Su pedido ha sido procesado exitosamente.');
+        const { ticketId } = result;
+        await downloadTicketPDF(ticketId);
+
+        
+        // 4. CONFIRMACIÓN DE ÉXITO (SweetAlert)
+        // Cerramos el loader anterior y mostramos el éxito
+        await Swal.fire({
+            icon: 'success',
+            title: '¡Compra Exitosa!',
+            text: 'Su pedido ha sido procesado, descargue el comprobante y envielo a su vendedor',
+            confirmButtonText: 'Volver al inicio',
+            confirmButtonColor: '#3085d6', // Puedes cambiar el color del botón aquí
+            allowOutsideClick: false // Obliga al usuario a dar click en el botón
+        }).then((result) => {
+            /* IMPORTANTE: 
+               Todo lo que sucede después del click del usuario va AQUÍ.
+            */
+            if (result.isConfirmed) {
+                // Limpieza
+                localStorage.removeItem('cart');
+                localStorage.removeItem('customerData'); 
+                
+                // Redirección
+                window.location.href = 'index.html'; 
+            }
+        });
         
         localStorage.removeItem('cart');
         localStorage.removeItem('customerData'); // Opcional, quizás quieras mantener al usuario logueado
@@ -327,5 +352,37 @@ async function finishPurchase() {
         console.error('Error:', error);
         alert(`Hubo un error: ${error.message}. Por favor intente nuevamente.`);
         // NO borramos el carrito ni redirigimos, para que el usuario pueda intentar de nuevo
+    }
+}
+
+async function downloadTicketPDF(ticketId) {
+    try {
+        // Hacemos el fetch al endpoint del PDF
+        const response = await fetch(`${devBackendURL}${devBackendPort}/tickets/${ticketId}/pdf`);
+        
+        if (!response.ok) throw new Error("No se pudo generar el PDF");
+
+        // Convertimos la respuesta en un BLOB (Binary Large Object)
+        const blob = await response.blob();
+
+        // Creamos una URL temporal para ese blob
+        const url = window.URL.createObjectURL(blob);
+
+        // Creamos un link invisible en el DOM
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `comprobante-${ticketId}.pdf`; // Nombre del archivo que bajará el usuario
+        document.body.appendChild(a);
+        
+        // Simulamos el click
+        a.click();
+
+        // Limpiamos
+        a.remove();
+        window.URL.revokeObjectURL(url);
+
+    } catch (error) {
+        console.error("Error descargando PDF:", error);
+        alert("La compra fue exitosa, pero hubo un error descargando el comprobante.");
     }
 }
