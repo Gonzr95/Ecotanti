@@ -324,7 +324,7 @@ async function finishPurchase() {
         await Swal.fire({
             icon: 'success',
             title: '¡Compra Exitosa!',
-            text: 'Su pedido ha sido procesado, descargue el comprobante y envielo a su vendedor',
+            html: `Su pedido ha sido procesado. <br>A continuacion las instrucciones para finalizar el pedido.<br>1)Descargue el comprobante y envieselo a su vendedor<br>  Gonzalo: 01153174467 <br>   Priscila: 01123023763<br>2)Envie el dinero junto con el comprobante<br>Le agradecemos su compra`,
             confirmButtonText: 'Volver al inicio',
             confirmButtonColor: '#3085d6', // Puedes cambiar el color del botón aquí
             allowOutsideClick: false // Obliga al usuario a dar click en el botón

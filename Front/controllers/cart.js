@@ -61,6 +61,39 @@ export class Cart {
         this.products = [];
         this.saveToStorage();
     }
+
+    notifyAddedProd(nombreProducto) {
+    Toastify({
+        text: `¡${nombreProducto} se agregó al carrito!`,
+        duration: 3000, // Duración en milisegundos (3 seg)
+        gravity: "top", // "top" o "bottom"
+        position: "right", // "left", "center" o "right"
+        stopOnFocus: true, // Si el usuario pone el mouse encima, no desaparece
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)", // Degradado verde moderno
+            borderRadius: "10px",
+            fontSize: "16px"
+        },
+        offset: {
+            x: 10, // Eje horizontal
+            y: 10  // Eje vertical
+        },
+        onClick: function(){ 
+            // Opcional: Si tocan la notificación, llevar al carrito
+            // window.location.href = "carrito.html"; 
+        } 
+    }).showToast();
+}
+
+    notifyInsuficientStock(stockDisponible) {
+    Swal.fire({
+        icon: 'error',
+        title: 'Stock insuficiente',
+        text: `Lo sentimos, solo tenemos ${stockDisponible} unidades disponibles de este producto.`,
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#d33' // Color rojo para indicar error
+    });
+}
 }
 
 

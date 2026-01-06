@@ -191,7 +191,7 @@ function createProductCard(product) {
         // Si supera el stock, setear al máximo disponible
         else if (currentValue > product.stock) {
             qtyInput.value = product.stock;
-            notifyInsuficientStock(product.stock);
+            MyCart.notifyInsuficientStock(product.stock);
         }
     });
 
@@ -210,8 +210,18 @@ function createProductCard(product) {
     addToCartBtn.addEventListener('click', () => {
         const quantityToAdd = parseInt(qtyInput.value);
 
+
+        // chequear si ya esta en el carrito y si la suma supera stock disponible
+        const existingProduct = MyCart.products.find(item => item.id === product.id);
+        if( existingProduct && 
+            existingProduct.quantity + quantityToAdd > product.stock)
+        {
+            MyCart.notifyInsuficientStock(product.stock);
+            return;
+        }
+        
         if(quantityToAdd > product.stock) {
-            notifyInsuficientStock(product.stock);
+            MyCart.notifyInsuficientStock(product.stock);
             return;
         }
 
@@ -226,7 +236,7 @@ function createProductCard(product) {
         //hace falta 1)nombre, 2)precio, 3)url imagen, 4)descripcion
         MyCart.addProduct(product.id, quantityToAdd, productData);
 
-        notifyAddedProd(`${product.brand} ${product.lineUp}`);
+        MyCart.notifyAddedProd(`${product.brand} ${product.lineUp}`);
 
         console.log(`Agregando ${quantityToAdd} unidad(es) de ${product.name} al carrito.`);
         qtyInput.value = 1;
@@ -254,35 +264,3 @@ finishBuyBtn.addEventListener('click', () => {
 });
 
 
-function notifyAddedProd(nombreProducto) {
-    Toastify({
-        text: `¡${nombreProducto} se agregó al carrito!`,
-        duration: 3000, // Duración en milisegundos (3 seg)
-        gravity: "top", // "top" o "bottom"
-        position: "right", // "left", "center" o "right"
-        stopOnFocus: true, // Si el usuario pone el mouse encima, no desaparece
-        style: {
-            background: "linear-gradient(to right, #00b09b, #96c93d)", // Degradado verde moderno
-            borderRadius: "10px",
-            fontSize: "16px"
-        },
-        offset: {
-            x: 10, // Eje horizontal
-            y: 10  // Eje vertical
-        },
-        onClick: function(){ 
-            // Opcional: Si tocan la notificación, llevar al carrito
-            // window.location.href = "carrito.html"; 
-        } 
-    }).showToast();
-}
-
-function notifyInsuficientStock(stockDisponible) {
-    Swal.fire({
-        icon: 'error',
-        title: 'Stock insuficiente',
-        text: `Lo sentimos, solo tenemos ${stockDisponible} unidades disponibles de este producto.`,
-        confirmButtonText: 'Entendido',
-        confirmButtonColor: '#d33' // Color rojo para indicar error
-    });
-}
