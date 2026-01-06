@@ -1,0 +1,263 @@
+/* --- 1. CONFIGURACIÓN GENERAL --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Elimina flash azul en móbiles */
+}
+
+body {
+    background-color: #f4f6f8;
+    padding-bottom: 120px; /* Espacio para el footer fijo */
+    padding-top: 50px;    /* Espacio para el header fijo */
+}
+
+/* --- 2. HEADER FIJO (Inventario + Saludo + Categorías) --- */
+/* Creamos un contenedor virtual para lo que está arriba */
+.fixed-header-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    padding-bottom: 10px;
+}
+
+/* Estilo para el <p>Inventario</p> */
+.brand-header {
+    padding: 15px 20px 5px 20px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+}
+
+#greeting-section {
+    padding: 0 20px 10px 20px;
+}
+
+#greeting-h1 {
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 400;
+}
+
+/* --- 3. CATEGORIAS --- */
+#categories-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 5px 20px 10px 20px;
+    /* Ocultar scrollbars */
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+#categories-container::-webkit-scrollbar {
+    display: none;
+}
+
+.category-btn {
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: #475569;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.category-btn:hover, .category-btn.active {
+    background-color: #0f172a;
+    color: white;
+    border-color: #0f172a;
+}
+
+/* --- 4. GRILLA DE PRODUCTOS --- */
+#products-container {
+    display: grid;
+    /* Esto hace que las columnas se ajusten solas. Minimo 160px ancho */
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- 5. ESTILOS DE LA CARD (Lo más importante) --- */
+.product-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid transparent;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-color: #e2e8f0;
+}
+
+/* Imagen */
+.product-card img {
+    width: 100%;
+    height: 150px; /* Altura fija para uniformidad */
+    object-fit: cover; /* Recorta la imagen sin deformarla */
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background-color: #f1f5f9;
+}
+
+/* Título */
+.product-card h3 {
+    font-size: 1rem;
+    color: #1e293b;
+    margin-bottom: 4px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* Descripción */
+.product-card .description {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    flex-grow: 1; /* Empuja el precio hacia abajo si hay espacio */
+}
+
+/* Precio */
+.product-card .price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 12px;
+}
+
+/* --- 6. CONTROLES DE CANTIDAD (+ 1 -) --- */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #f1f5f9;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: #64748b;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+}
+
+.qty-btn:active {
+    background-color: #e2e8f0;
+}
+
+.qty-input {
+    width: 40px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 1rem;
+    outline: none;
+    -moz-appearance: textfield; /* Quitar flechas en Firefox */
+}
+/* Quitar flechas en Chrome/Safari */
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* --- 7. BOTÓN AGREGAR --- */
+.add-to-cart-btn {
+    width: 100%;
+    background-color: #0f172a;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #334155;
+}
+
+.add-to-cart-btn:active {
+    transform: scale(0.98);
+}
+
+/* --- 8. FOOTER STICKY --- */
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 15px 20px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+}
+
+#finish-buy-btn {
+    background-color: #0f172a;
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3);
+    cursor: pointer;
+    width: 100%;
+    max-width: 400px;
+    transition: transform 0.2s;
+}
+
+#finish-buy-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Animación opcional para cuando supera el stock */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.error-shake {
+  animation: shake 0.3s ease-in-out;
+  border-color: red;
+}

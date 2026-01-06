@@ -1,5 +1,140 @@
-.welcome-section > p {
-    color: red;
-    font-style: italic;
+/* 1. Reset Básico y Variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
+body {
+    background-color: #f4f6f8; /* Un gris muy suave de fondo */
+    height: 100vh; /* Ocupar toda la pantalla */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Evitar scrollbars innecesarios */
+}
+
+/* 2. Header (Botón Admin) */
+header {
+    width: 100%;
+    padding: 20px 30px;
+    position: absolute; /* Lo sacamos del flujo para pegarlo arriba */
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end; /* Empuja el contenido a la derecha */
+}
+
+#admin-btn {
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    color: #64748b;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#admin-btn:hover {
+    border-color: #334155;
+    color: #334155;
+    background-color: #e2e8f0;
+}
+
+/* 3. Main (Contenedor Centrado) */
+main {
+    flex: 1; /* Ocupa el espacio restante */
+    display: flex;
+    justify-content: center; /* Centrado Horizontal */
+    align-items: center; /* Centrado Vertical */
+    padding: 20px;
+}
+
+/* 4. Tarjeta de Bienvenida (La caja blanca) */
+.welcome-section {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 400px; /* Ancho máximo para que no se estire */
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.01); /* Sombra suave y moderna */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre elementos */
+}
+
+.welcome-section h2 {
+    color: #1e293b;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* 5. Inputs */
+input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+}
+
+input[type="text"]:focus {
+    border-color: #3b82f6; /* Color azul al escribir */
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 6. Mensajes de Error */
+#name-input-error, #lastName-input-error {
+    color: #ef4444; /* Rojo suave */
+    font-size: 0.75rem;
+    text-align: left;
+    min-height: 5px; /* Evita saltos si está vacío */
+    margin-top: -5px;
+    margin-left: 5px;
+}
+
+/* 7. Botones de Acción */
+.btn-ingresar {
+    margin-top: 10px;
+    background-color: #0f172a; /* Azul oscuro casi negro */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.btn-ingresar:hover {
+    background-color: #334155;
+    transform: translateY(-2px); /* Pequeña elevación */
+}
+
+.btn-ingresar:active {
+    transform: translateY(0);
+}
+
+#quick-access-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.85rem;
+    margin-top: 15px;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+#quick-access-btn:hover {
+    color: #3b82f6;
 }
