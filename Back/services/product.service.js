@@ -33,7 +33,8 @@ export async function checkProductExistence(productData) {
     const existingProduct = await Product.findOne({ 
         where: {
             brand: productData.brand, 
-            lineUp: productData.lineUp 
+            lineUp: productData.lineUp,
+            description: productData.description
         }
     });
     

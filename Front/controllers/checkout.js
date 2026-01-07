@@ -194,7 +194,7 @@ function createSubtotalElement(product, qtyInput) {
 function createPriceElement(product) {
     const price = document.createElement('p');
     price.classList.add('price');
-    price.textContent = formatCurrency(product.product.price);
+    price.textContent = `Precio x U: ${formatCurrency(product.product.price)}`;
 
     return price;
 

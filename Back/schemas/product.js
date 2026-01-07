@@ -17,7 +17,7 @@ export const createProductSchema = z.object({
     lineUp: z
     .string()
     .nonempty()
-    .min(4)
+    .min(3)
     .max(32),
 
     description: z

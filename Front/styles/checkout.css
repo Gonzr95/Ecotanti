@@ -1,3 +1,7 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Elimina flash azul en móbiles */}
+
 /* 1. EL CONTENEDOR (GRILLA) */
 #checkout-grid {
     display: grid;
@@ -49,9 +53,11 @@
 
 /* Estilos de los textos internos */
 .product-details h3 {
-    margin: 0 0 10px 0;
-    font-size: 1.2rem;
-    color: #333;
+    font-size: 1rem;
+    color: #1e293b;
+    margin-bottom: 4px;
+    font-weight: 600;
+    line-height: 1.3;
 }
 
 .price {
