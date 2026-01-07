@@ -1,6 +1,48 @@
 * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    -webkit-tap-highlight-color: transparent; /* Elimina flash azul en móbiles */}
+    -webkit-tap-highlight-color: transparent; /* Elimina flash azul en móbiles */
+}
+body {
+    background-color: #f4f6f8;
+    padding-bottom: 300px; /* Espacio para el footer fijo */
+    padding-top: 50px;    /* Espacio para el header fijo */
+}
+
+/* --- 2. HEADER FIJO (Inventario + Saludo + Categorías) --- */
+/* Creamos un contenedor virtual para lo que está arriba */
+.fixed-header-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    padding-bottom: 10px;
+    display: flex;              
+    flex-direction: column;     /* Elementos uno debajo del otro */
+    align-items: center;        /* Centra horizontalmente los hijos */
+    text-align: center;         /* Asegura que el texto interno también se centre */
+    padding-bottom: 10px;
+
+}
+
+/* Aseguramos que los contenedores internos no bloqueen el centrado */
+.brand-header, #greeting-section {
+    width: 100%;             /* Ocupan todo el ancho */
+    max-width: 1200px;       /* Pero con un límite razonable */
+    text-align: center;      /* Texto al centro */
+}
+
+#greeting-h1 {
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 400;
+}
 
 /* 1. EL CONTENEDOR (GRILLA) */
 #order-summary {
@@ -193,7 +235,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra suave y difusa */
     border: 1px solid #e2e8f0; /* Borde sutil */
     
-    max-width: 500px;          /* Ancho máximo para que no se vea estirado */
+    max-width: 800px;          /* Ancho máximo para que no se vea estirado */
     margin: 40px auto;         /* Separación del grid de productos y centrado */
     
     display: flex;
@@ -223,7 +265,7 @@
 /* 3. Estilo del Total ("Total a pagar...") */
 /* Usamos :nth-last-of-type(1) para seleccionar el último párrafo antes del botón */
 #payment-summary p:nth-last-of-type(1) {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     color: #0f172a;
     font-weight: 800;          /* Muy negrita */
     margin-top: 10px;
@@ -241,7 +283,7 @@
     border: none;
     padding: 16px;
     border-radius: 12px;       /* Bordes redondeados consistentes */
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
