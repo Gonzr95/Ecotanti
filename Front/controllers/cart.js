@@ -51,6 +51,14 @@ export class Cart {
         // updateCartCounter(); 
     }
 
+    updateQuantity(productId, newQuantity) {
+        const product = this.products.find(item => item.id === productId);
+        if (product) {
+            product.quantity = newQuantity;
+            this.saveToStorage();
+        }
+    }
+
     removeProduct(productId) {
         //reemplazamos el array actual x uno que no contenga el producto a eliminar
         this.products = this.products.filter(item => item.id !== productId);

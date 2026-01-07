@@ -3,13 +3,13 @@
     -webkit-tap-highlight-color: transparent; /* Elimina flash azul en móbiles */}
 
 /* 1. EL CONTENEDOR (GRILLA) */
-#checkout-grid {
+#order-summary {
     display: grid;
     grid-template-columns: 1fr; /* Una sola columna (lista vertical) */
-    gap: 20px; /* Espacio entre productos */
     max-width: 800px; /* Ancho máximo para que no se estire demasiado */
+    gap: 5px;
     margin: 0 auto; /* Centrado en la pantalla */
-    padding: 20px;
+
 }
 
 /* 2. LA TARJETA (FLEXBOX: IZQ - DER) */
@@ -21,6 +21,9 @@
     overflow: hidden; /* Para que la imagen respete el borde redondeado */
     position: relative; /* Necesario para posicionar el botón de borrar */
     transition: transform 0.2s ease;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 .product-card:hover {
@@ -40,21 +43,27 @@
     height: 100%;
     object-fit: cover; /* Recorta la imagen para llenar el cuadro sin deformar */
     display: block;
+    border-radius: 10px;
+
 }
 
 /* 4. LOS DETALLES (DERECHA) */
 .product-details {
-    padding: 15px 20px;
+    padding-left: 12px;
     display: flex;
+    margin-bottom: 0px;
     flex-direction: column; /* Elementos uno debajo del otro */
     justify-content: center; /* Centrado verticalmente */
     flex-grow: 1; /* Ocupa todo el espacio restante */
+    padding-top: 5px;
 }
 
 /* Estilos de los textos internos */
 .product-details h3 {
     font-size: 1rem;
     color: #1e293b;
+    margin-top: 0px;
+    padding-top: 0px;
     margin-bottom: 4px;
     font-weight: 600;
     line-height: 1.3;
@@ -70,6 +79,8 @@
     font-weight: bold;
     color: #000;
     margin-top: 5px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
     font-size: 1.1rem;
 }
 
@@ -79,6 +90,12 @@
     align-items: center;
     gap: 5px;
     margin: 8px 0;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #f1f5f9;
+    width: fit-content;
 }
 
 .qty-btn {
@@ -99,13 +116,42 @@
     background-color: #ddd;
 }
 
-.qty-input {
-    width: 45px;
-    height: 30px;
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     font-weight: bold;
+    color: #64748b;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+}
+
+.qty-btn:active {
+    background-color: #e2e8f0;
+}
+
+.qty-input {
+    width: 40px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 1rem;
+    outline: none;
+    -moz-appearance: textfield; /* Quitar flechas en Firefox */
+}
+/* Quitar flechas en Chrome/Safari */
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* 6. BOTÓN ELIMINAR (Posicionado absoluto arriba derecha) */
@@ -136,4 +182,78 @@
         width: 100%;
         height: 200px;
     }
+}
+
+
+/* --- 8. RESUMEN DE COMPRA (Payment Summary) --- */
+#payment-summary {
+    background-color: #ffffff;
+    border-radius: 16px;       /* Coherencia con .product-card */
+    padding: 25px;             /* Espaciado interno generoso */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra suave y difusa */
+    border: 1px solid #e2e8f0; /* Borde sutil */
+    
+    max-width: 500px;          /* Ancho máximo para que no se vea estirado */
+    margin: 40px auto;         /* Separación del grid de productos y centrado */
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;                 /* Espacio entre las líneas de texto */
+}
+
+/* 1. Estilo del Título ("Resumen de compra") */
+#payment-summary p:first-child {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0f172a;            /* Slate 900 (Oscuro) */
+    margin-bottom: 5px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f1f5f9; /* Línea divisoria */
+    text-align: center;
+}
+
+/* 2. Estilo de los textos intermedios (Cantidad) */
+#payment-summary p {
+    font-size: 1rem;
+    color: #64748b;            /* Slate 500 (Gris medio) */
+    margin: 0;
+    font-weight: 500;
+}
+
+/* 3. Estilo del Total ("Total a pagar...") */
+/* Usamos :nth-last-of-type(1) para seleccionar el último párrafo antes del botón */
+#payment-summary p:nth-last-of-type(1) {
+    font-size: 1.4rem;
+    color: #0f172a;
+    font-weight: 800;          /* Muy negrita */
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px dashed #cbd5e1; /* Línea punteada superior */
+    text-align: right;         /* Alineado a la derecha como una factura */
+}
+
+/* 4. Botón de Finalizar */
+.finish-purchase-btn {
+    margin-top: 10px;
+    width: 100%;
+    background-color: #0f172a; /* Mismo color principal que "Agregar" */
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;       /* Bordes redondeados consistentes */
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(15, 23, 42, 0.1);
+}
+
+.finish-purchase-btn:hover {
+    background-color: #334155; /* Slate 700 al pasar el mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(15, 23, 42, 0.2);
+}
+
+.finish-purchase-btn:active {
+    transform: scale(0.98);
 }

@@ -161,6 +161,8 @@ function createAddButton(product, qtyInput, subtotal) {
             setTimeout(() => qtyInput.classList.remove('error-shake'), 500);
         }
                 subtotal.textContent = `Subtotal: ${formatCurrency(product.product.price * qtyInput.value)}`;
+                MyCart.updateQuantity(product.id, parseInt(qtyInput.value));
+                calculateTotal();
     });
 
     return plusBtn;
@@ -178,6 +180,8 @@ function createSubtractButton(product, qtyInput, subtotal) {
             qtyInput.value = currentValue - 1;
         }
         subtotal.textContent = `Subtotal: ${formatCurrency(product.product.price * qtyInput.value)}`;
+        MyCart.updateQuantity(product.id, parseInt(qtyInput.value));
+        calculateTotal();
     });
 
     return minusBtn;
@@ -235,6 +239,7 @@ function calculateTotal() {
     
     
     const paymentSummary = document.getElementById('payment-summary');
+    paymentSummary.innerHTML = ''; // Limpiamos el resumen previo
     const producstQty = document.createElement('p');
     producstQty.textContent = `Cantidad de productos: ( ${MyCart.products.length} )`;
 
