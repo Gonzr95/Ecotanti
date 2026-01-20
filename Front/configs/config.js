@@ -1,2 +1,1 @@
-export const devBackendURL = 'http://localhost:';
-export const devBackendPort = '3000';
+export const devBackendURL = 'http://localhost:3000';

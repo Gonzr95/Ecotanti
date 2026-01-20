@@ -1,4 +1,4 @@
-import { devBackendURL, devBackendPort } from '../configs/config.js';
+import { devBackendURL } from '../configs/config.js';
 import { Cart } from './cart.js';
 const MyCart = new Cart();
 
@@ -25,7 +25,7 @@ async function loadCategories() {
     
     try {
         
-        const response = await fetch(`${devBackendURL}${devBackendPort}/products/categories`);
+        const response = await fetch(`${devBackendURL}/products/categories`);
         if (!response.ok) throw new Error('Error al conectar con el servidor');
         const categories = await response.json();
         
@@ -68,7 +68,7 @@ async function loadProducts(category) {
 
     try {
         // 2. Seguridad: encodeURIComponent ya lo tenías, ¡bien hecho! Evita errores con espacios o caracteres especiales.
-        const response = await fetch(`${devBackendURL}${devBackendPort}/products?category=${encodeURIComponent(category)}`);
+        const response = await fetch(`${devBackendURL}/products?category=${encodeURIComponent(category)}`);
         
         if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
         
@@ -116,7 +116,7 @@ function createProductCard(product) {
 
 
     const img = document.createElement('img');
-    img.src = `${devBackendURL}${devBackendPort}/${product.images[0]}`|| 'https://via.placeholder.com/300'; // Fallback si no hay imagen
+    img.src = `${devBackendURL}/${product.images[0]}`|| 'https://via.placeholder.com/300'; // Fallback si no hay imagen
     img.alt = `Imagen de ${product.name}`;
     img.loading = "lazy"; // Performance: carga diferida de imágenes
 

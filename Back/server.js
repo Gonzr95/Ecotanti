@@ -6,6 +6,7 @@ import path from 'path';
 import { router as userRouter } from "./routes/users.js";
 import { router as productsRouter } from "./routes/products.js";
 import { router as ticketsRouter } from "./routes/tickets.js";
+import { router as administratorsRouter } from "./routes/administrators.js";
 import cors from "cors";
 import { connectDB } from "./db/sequelize.js";
 connectDB();
@@ -30,7 +31,7 @@ app.use(express.json());
 app.use(userRouter);
 app.use(productsRouter);
 app.use(ticketsRouter);
-
+app.use(administratorsRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

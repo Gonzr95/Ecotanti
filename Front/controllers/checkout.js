@@ -1,7 +1,7 @@
 import { Cart } from "./cart.js";
 const MyCart = new Cart();
 const orderSummary =  document.getElementById('order-summary');
-import { devBackendURL, devBackendPort } from "../configs/config.js";
+import { devBackendURL } from "../configs/config.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     loadCart();
@@ -303,7 +303,7 @@ async function finishPurchase() {
 
     try {
         // 2. HACER EL FETCH
-        const response = await fetch(`${devBackendURL}${devBackendPort}/tickets`, {
+        const response = await fetch(`${devBackendURL}/tickets`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -363,7 +363,7 @@ async function finishPurchase() {
 async function downloadTicketPDF(ticketId) {
     try {
         // Hacemos el fetch al endpoint del PDF
-        const response = await fetch(`${devBackendURL}${devBackendPort}/tickets/${ticketId}/pdf`);
+        const response = await fetch(`${devBackendURL}/tickets/${ticketId}/pdf`);
         
         if (!response.ok) throw new Error("No se pudo generar el PDF");
 

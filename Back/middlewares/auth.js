@@ -1,5 +1,5 @@
 import { verifyToken } from '../utils/jwt.js';
-import { BlacklistedToken } from '../models/blacklistedToken.js'; // Importamos el modelo
+import { BlacklistedToken } from '../models/blackListedToken.js'; // Importamos el modelo
 
 export const authenticate = async (req, res, next) => {
     // 1. Obtener el header Authorization
