@@ -1,4 +1,4 @@
-import { devBackendURL } from "../configs/config.js0";
+import { devBackendURL } from "../configs/config.js";
 // ************ CLIENTE ************ //
 const btnLogin = document.getElementById("login-btn");
 btnLogin.addEventListener("click", () => {
@@ -83,6 +83,6 @@ document.getElementById('quick-access-btn').addEventListener('click', () => {
 document.getElementById('admin-btn').addEventListener('click', async() => {
     const response = await fetch(`${bac}`);
 
-}
+});
 
 // ************ ADMINISTRADOR ************ //
